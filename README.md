@@ -16,3 +16,5 @@ $ npm install && bower install
 $ gulp serve
 ```
 # for542CSFrontGrp
+
+Hello, it's me here
