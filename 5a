@@ -1,0 +1,9 @@
+sansforensics@siftworkstation:/cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/netflow$ nfdump -R ./ -B -N 'host 93.114.46.11 and port 49288'
+Date first seen          Duration Proto      Src IP Addr:Port           Dst IP Addr:Port   Out Pkt   In Pkt Out Byte  In Byte Flows
+Verify map id 0: ERROR: Expected 7 elements in map, but found 2!
+2013-08-30 03:51:47.205    15.826 6         93.114.46.11:49288 <->     98.252.16.36:443       2721      619  3932787    26012     2
+2013-08-30 03:51:47.205    15.826 6         93.114.46.11:49288 <->    172.16.62.100:443       2721      619  3932787    26012     2
+Summary: total flows: 4, total bytes: 7917598, total packets: 6680, avg bps: 4002324, avg pps: 422, avg bpp: 1185
+Time window: 2013-08-29 11:08:16 - 2013-08-30 15:12:25
+Total flows processed: 68439, Blocks skipped: 0, Bytes read: 3602092
+Sys: 0.049s flows/second: 1376986.8  Wall: 0.071s flows/second: 951413.8  
