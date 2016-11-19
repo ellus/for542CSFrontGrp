@@ -1,11 +1,15 @@
 10.3.58.4 Domain controler/SMTP Server  alos  McAfee Epo server listinging on 3137
 10.3.58.5 Nathasa Romanoff
 -- comunicated with 199.73.28.114  on port 53
+-- comunicated with 199.73.28.114 port 443 -- a lot of comunication
+-- comunicated with 199.73.28.114 port 4444 -- a lot of comunication
 10.3.58.6 Nick Fury
 -- comunicated with 199.73.28.114 on port 22
 -- comunicated with 199.73.28.114 
 10.3.58.7 Timothy Dungan
    -- comunicated with 199.73.28.114 port 80 -- a lot of comunication
+   -- comunicated with 199.73.28.114 port 443 -- a lot of comunication
+   -- connected with 199.73.28.114 port 8000 -- a lot of comunication
 10.3.58.8 ??
 10.3.58.9 ??
 10.3.16.5 ??
