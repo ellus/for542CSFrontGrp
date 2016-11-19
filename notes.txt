@@ -1,7 +1,7 @@
 10.3.58.4 Domain controler/SMTP Server  alos  McAfee Epo server listinging on 3137
-10.3.58.5 Nathasa Romanoff
-10.3.58.6 Nick Fury
-10.3.58.7 Timothy Dungan
+10.3.58.5 Nathasa Romanoff  -- comunicated with 199.73.28.114 
+10.3.58.6 Nick Fury   -- comunicated with 199.73.28.114 
+10.3.58.7 Timothy Dungan   -- comunicated with 199.73.28.114 
 10.3.58.8 ??
 10.3.58.9 ??
 10.3.16.5 ??
