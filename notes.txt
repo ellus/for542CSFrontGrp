@@ -78,7 +78,7 @@ CA
 10.3.58.7
 12.190.135.234
 10.3.58.7
-54.240.160.193   (very intresting)
+54.240.160.193   (very intresting)   www.flightstats.com  -access from computer of TimDungan
 10.3.58.6
 68.232.32.137
 10.3.58.7
