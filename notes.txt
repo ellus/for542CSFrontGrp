@@ -116,3 +116,8 @@ Doing some research for alloy strengthening.  Anyone have any good resources?
 Ellus
 Berkeley Packet Filter syntax
 http://biot.com/capstats/bpf.html
+
+
+Ellus
+splitting pcap in time intervals
+editcap -F libpcap -A "2012-04-03 00:10:00" -B "2012-04-03 00:45:00" stark_labs_traffic.pcap srl201204030010_35min.pcap
