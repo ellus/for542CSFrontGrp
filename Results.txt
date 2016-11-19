@@ -1,0 +1,30 @@
+How did the attacker breach the Stark network						
+	We believe its a speakphishing 					
+	3/04/ 1:06 AM UTC Start beaconing a get /ads 199					
+	From Mhill.shield@ yahoo.com	To tdungan@stark-reseach.com		Date 03/04/2012 00:27 		bit.ly link
+	Tim Dungon was comrpimised					
+						
+What systems were compromised						
+	10.3.58.5					
+	10.3.58.6					
+	10.3.58.7					
+						
+When was each system compromised 						
+	10.3.58.7 3/04/ 1:06 AM UTC					
+						
+						
+						
+How was each system compromised. 						
+	Tim Dungon was compromised with speakphishing link					
+						
+						
+What actions were taken on each system by the attacker						
+	"Spread the malware into windows\system32\folder\ 
+and create the file
+windows\system32\hythonize.exe (frame 137820 in the pcap)
+there are a lot of files, some very intresting, in the session."					
+	scheduled task 					
+	"in this session there's a request to connect to the share:
+\\199.73.28.114\c$ (frame 137724 in the pcap)"					
+What data did the attacker steal.						
+	Ex filtrated data on github https://github.com/ellus/for542CSFrontGrp/tree/master/smbfiles					
