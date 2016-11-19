@@ -1,0 +1,10 @@
+CA 
+NF trafic betwee 2/04 to 7/04 fom TimDungan 10.3.58.7
+Date first seen          Duration  Proto   Packets    Bytes      bps    Bpp Flows
+2012-04-02 21:52:29.622 336674.490  TCP       1.1 M  579.2 M    13761    511 72099
+2012-04-02 21:52:29.635 336616.142  UDP       23359    2.9 M       68    123 22543
+2012-04-02 21:59:16.397 335865.004  ICMP       2403   106152        2     44  2403
+Summary: total flows: 97045, total bytes: 582141298, total packets: 1158546, avg bps: 13832, avg pps: 3, avg bpp: 502
+Time window: 2012-04-02 21:52:19 - 2012-04-06 19:28:02
+Total flows processed: 323982, Blocks skipped: 0, Bytes read: 15578112
+Sys: 0.044s flows/second: 7359046.0  Wall: 0.043s flows/second: 7530437.2 
