@@ -1,0 +1,14 @@
+Preparation)
+cd /cases/for572/
+mkdir e-2.3
+cd /cases/for572/e-2.3/
+unzip /mnt/hgfs/exercise_data/E-2.3_source_evidence.zip
+
+3a)
+cd /cases/for572/e-2.3/E-2.3_source_evidence/
+for infile in capture*_networkminer.pcap; do
+    tcpdump -n -r $infile -w /cases/for572/e-2.3/${infile}_23.15.pcap 'net 23.15.0.0/16';
+done
+cd /cases/for572/e-2.3/
+mergecap -w 23.15.pcap *_23.15.pcap
+md5sum 23.15.pcap

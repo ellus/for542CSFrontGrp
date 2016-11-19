@@ -1,0 +1,42 @@
+Preparation)
+cd /cases/for572/
+mkdir e-1.3
+cd /cases/for572/e-1.3/
+unzip /mnt/hgfs/exercise_data/E-1.3_source_evidence.zip
+
+1a)
+http.request and http.host contains "google"
+
+2a)
+http.request.method == "POST" and http.host contains "pastesite.com"
+
+3a)
+cd /cases/for572/e-1.3/
+md5sum base64_extraction.txt
+
+3b)
+cd /cases/for572/e-1.3/
+cat base64_extraction.txt | uridecode.py > base64_native.txt
+md5sum base64_native.txt
+
+3c)
+cd /cases/for572/e-1.3/
+base64 -di base64_native.txt > base64_decoded.bin
+md5sum base64_decoded.bin
+
+3d)
+cd /cases/for572/e-1.3/
+file base64_decoded.bin
+unzip -t base64_decoded.bin
+
+4d)
+cd /cases/for572/e-1.3/E-1.3_source_evidence/
+tshark -n -r E-1.3_capture.pcap -Y 'http.host contains "google" and http.request'
+tshark -n -r E-1.3_capture.pcap -Y 'http.host contains "pastesite.com" and http.request.method == "POST"'
+tshark -n -x -r E-1.3_capture.pcap -Y 'frame.number==27757'
+tshark -n -r E-1.3_capture.pcap -Y 'frame.number==29099' -T fields -e tcp.stream
+tshark -n -r E-1.3_capture.pcap -Y 'tcp.stream==465' -T fields -e tcp.segment_data > /cases/for572/e-1.3/http_data.txt
+cd /cases/for572/e-1.3/
+cat http_data.txt | awk '{printf "%s", $1}' | tr -d ':' > base64_hex.txt
+cat base64_hex.txt | perl -nE 'print pack("H*", $_);' > http_post.txt
+vim http_post.txt

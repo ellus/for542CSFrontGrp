@@ -1,0 +1,11 @@
+Preparation)
+cd /cases/for572/
+mkdir e-5.2
+cd /cases/for572/e-5.2/
+unzip /mnt/hgfs/exercise_data/E-5.2_source_evidence.zip
+
+1f)
+dns.a == 205.209.161.13
+
+2d)
+dns.a == 199.192.156.134

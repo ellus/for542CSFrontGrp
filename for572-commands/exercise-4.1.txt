@@ -1,0 +1,41 @@
+Preparation)
+cd /cases/for572/
+mkdir e-4.1
+cd /cases/for572/e-4.1/
+unzip /mnt/hgfs/exercise_data/E-4.1_source_evidence.zip
+
+1a)
+cd /cases/for572/e-4.1/E-4.1_source_evidence/
+nfdump -B -O tstart -R netflow/floor/ -o 'fmt:%ts %te %sa' 'host 65.39.178.58' | linewatch -t 20% -B 1
+cd /cases/for572/e-4.1/E-4.1_source_evidence/
+nfdump -N -B -O tstart -t '2013/05/07.14:31:18-2013/05/07.14:32:40' -R netflow/floor/ -o 'fmt:%ts %te %sap %dap %pr %ibyt %obyt' 'host 65.39.178.58'
+nfdump -N -B -O tstart -t '2013/05/07.21:22:44-2013/05/07.21:24:50' -R netflow/floor/ -o 'fmt:%ts %te %sap %dap %pr %ibyt %obyt' 'host 65.39.178.58'
+nfdump -N -B -O tstart -t '2013/05/07.21:49:19-2013/05/07.21:49:30' -R netflow/floor/ -o 'fmt:%ts %te %sap %dap %pr %ibyt %obyt' 'host 65.39.178.58'
+nfdump -N -B -O tstart -t '2013/05/07.23:53:14-2013/05/07.23:55:30' -R netflow/floor/ -o 'fmt:%ts %te %sap %dap %pr %ibyt %obyt' 'host 65.39.178.58'
+
+2b)
+cd /cases/for572/e-4.1/E-4.1_source_evidence/squid/var/log/squid/
+cat combined-access.log | awk -F "\"" '{print $6}' | sort | uniq -c | sort -nr
+cd /cases/for572/e-4.1/E-4.1_source_evidence/squid/var/log/squid/
+grep "\"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0\"" combined-access.log > /cases/for572/e-4.1/alternate_ua.log
+
+2c)
+cd /cases/for572/e-4.1/
+cat alternate_ua.log | awk '{print $1}' | sort | uniq
+
+2d)
+cd /cases/for572/e-4.1/
+cat alternate_ua.log | grep "10.3.59.157" | awk '{print $4,$5}' | linewatch -t 10% -B 1
+cat alternate_ua.log | grep "10.3.59.157" | awk '{print $4,$5}' | tail -n 1
+cat alternate_ua.log | grep "10.3.59.158" | awk '{print $4,$5}' | linewatch -t 10% -B 1
+cat alternate_ua.log | grep "10.3.59.158" | awk '{print $4,$5}' | tail -n 1
+cat alternate_ua.log | grep "10.3.59.159" | awk '{print $4,$5}' | linewatch -t 10% -B 1
+cat alternate_ua.log | grep "10.3.59.159" | awk '{print $4,$5}' | tail -n 1
+
+2f)
+cd /cases/for572/e-4.1/
+cat alternate_ua.log | awk '{print $7}' | awk -F\/ '{print $3}' | awk -F\. '{ OFS="." } { print $(NF-1),$NF}' | sort | uniq -c | sort -nr
+
+3c)
+cd /cases/for572/e-4.1/
+cat alternate_ua.log | grep "GET http://search.yahoo.com/search" | awk '{print $4,$5,$7}' | sed -e 's/\(\[.*\]\).*p=\([^&]\{1,\}\).*/\1 \2/'

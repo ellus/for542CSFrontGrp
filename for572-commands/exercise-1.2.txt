@@ -1,0 +1,68 @@
+Preparation)
+cd /cases/for572/
+mkdir e-1.2
+cd /cases/for572/e-1.2/
+
+1a)
+sudo tcpdump -n -i eth0 -s 0 'arp'
+
+1b)
+sudo arp-scan -l
+sudo tcpdump -n -i eth0 -s 0 'arp'
+
+1c)
+sudo tcpdump -n -i eth0 -s 0 'arp and not ether dst ff:ff:ff:ff:ff:ff'
+
+1d)
+sudo arp-scan -l
+sudo tcpdump -n -i eth0 -s 0 'arp and not ether dst ff:ff:ff:ff:ff:ff'
+
+2a)
+sudo tcpdump -n -i eth0 -s 0 -w /cases/for572/e-1.2/arpscan.pcap
+
+2b)
+sudo arp-scan -l
+
+2c)
+sudo tcpdump -n -i eth0 -s 0 -w arpscan.pcap
+
+2d)
+sudo chown sansforensics:sansforensics /cases/for572/e-1.2/arpscan.pcap
+chmod -w /cases/for572/e-1.2/arpscan.pcap
+
+3a)
+arp and not eth.dst == ff:ff:ff:ff:ff:ff
+
+4a)
+cd /mnt/hgfs/sample_pcaps/
+capinfos -T -H -a -e *.pcap LL_DARPA/*
+
+4b)
+cd /mnt/hgfs/sample_pcaps/
+editcap -A '2009-11-15 00:00:00' -B '2009-11-16 00:00:00' /mnt/hgfs/sample_pcaps/m57-patents_subset.pcap /cases/for572/e-1.2/m57-patents_2009-11-15.pcap
+
+4c)
+cd /cases/for572/e-1.2/
+tcpdump -n -r m57-patents_2009-11-15.pcap -w m57-patents_2009-11-15_subjectnet.pcap 'net 212.96.161.224/27'
+md5sum m57-patents_2009-11-15_subjectnet.pcap
+
+5c)
+http.response.code
+
+6a)
+cd /cases/for572/e-1.2/
+tshark -n -r /cases/for572/e-1.2/m57-patents_2009-11-15.pcap -Y 'http.server' -T fields -e http.server | sort | uniq -c | sort nr
+
+7a)
+cd /cases/for572/e-1.2/
+tshark -n -r /cases/for572/e-1.2/m57-patents_2009-11-15.pcap -Y 'http.server contains BigIP' -T fields -e ip.src | sort | uniq -c | sort -nr
+
+7b)
+cd /cases/for572/e-1.2/
+tshark -n -r /cases/for572/e-1.2/m57-patents_2009-11-15.pcap -Y 'http.response.code' -T fields -e frame.time_delta_displayed > /cases/for572/e-1.2/http_response-timedelta.txt
+
+7c)
+cd /cases/for572/e-1.2/
+for val in $( cat http_response-timedelta.txt ); do
+    printf '%.1f\n' $val;
+done > http_response-timedelta_tenths.txt

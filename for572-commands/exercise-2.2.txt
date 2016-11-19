@@ -1,0 +1,47 @@
+Preparation)
+cd /cases/for572/
+mkdir e-2.2
+cd /cases/for572/e-2.2/
+unzip /mnt/hgfs/exercise_data/E-2.2_source_evidence.zip
+
+1a)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -O bytes -R 2013/ -A proto -t '2013/07/17-2013/07/23' 'ip 10.3.58.7'
+
+1b)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -O packets -R 2013/ -A srcip,dstip -t '2013/07/17-2013/07/23' 'proto tcp and src ip 10.3.58.7 and flags S and not flags AFRPU'
+
+1c)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -O packets -A dstip -t '2013/07/17-2013/07/23' -R 2013/  -o 'fmt:%da %pkt %fl %bpp' 'proto tcp and src ip 10.3.58.7 and flags S and not flags AFRPU and (dst ip 199.73.28.114 or dst ip 199.73.23.114 or dst ip 68.71.216.157)'
+
+1d)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -O tstart -o extended -t '2013/07/17-2013/07/23' -R 2013/ 'proto tcp and src ip 10.3.58.7 and dst ip 199.73.28.114' | linewatch -c 90..95 -t 30% -C 1
+
+1e)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -A srcip -O tstart -o 'fmt:%ts %te %sa %pkt %byt' -R 2013/ -t '2013/07/17-2013/07/23' 'proto tcp and dst ip 199.73.28.114'
+
+2a)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -A proto,dstport -O tstart -o 'fmt:%ts %te %pr %dp %pkt %byt' -R 2013/ -t '2013/07/17-2013/07/23' 'src ip 10.3.58.7 and dst ip 199.73.28.114'
+
+2b)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -A srcip,proto,dstport -O tstart -R 2013/ -o 'fmt:%ts %te %sa %pr %dp %pkt %byt' -t '2013/07/17-2013/07/23' 'dst ip 199.73.28.114 and not ip 10.3.58.7'
+
+2c)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -O tstart -t '2013/07/17-2013/07/23' -R 2013/ 'dst ip 199.73.28.114 and src ip 10.3.58.6' -c 1
+
+2d)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -B -O tstart -R 2013/ -t '2013/07/20-2013/07/20.02:35:34' 'ip 10.3.58.6'
+
+3a)
+cd /cases/for572/e-2.2/E-2.2_source_evidence/netflow/
+nfdump -B -O tstart -R 2013/ -o 'fmt:%ts %te %sa %da %dp' -t '2013/07/20-2013/07/20.02:35:34' 'ip 10.3.58.6 and ip 10.3.58.7 and proto tcp and port 139'
+nfdump -B -O tstart -R 2013/ -o 'fmt:%ts %te %sa %da %dp' -t '2013/07/20-2013/07/20.02:35:34' 'ip 10.3.58.6 and ip 10.3.58.4 and proto udp and port 53'
+nfdump -B -O tstart -R 2013/ -o 'fmt:%ts %te %sa %da %dp' -t '2013/07/20-2013/07/20.02:35:34' 'ip 10.3.58.6 and ip 199.73.28.114'

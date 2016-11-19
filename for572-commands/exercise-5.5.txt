@@ -1,0 +1,97 @@
+Preparation)
+cd /cases/for572/
+mkdir e-5.5
+cd /cases/for572/e-5.5/
+unzip /mnt/hgfs/exercise_data/E-5.5_source_evidence.zip
+
+1a)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/netflow/
+nfdump -R ./ -B -N 'host 93.114.46.11 and port 49288'
+
+2a)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-web/var/log/httpd/
+grep 93.114.46.11 ssl_request_log | sort -k 9 -nr
+
+2b)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-web/var/log/httpd/
+grep "/wp-content/themes/twentythirteen/newlayout.php" ssl_access_log
+
+2c)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-web/var/log/httpd/
+grep newlayout.php ssl_access_log | grep -v "/wp-content/themes/twentythirteen/newlayout.php"
+grep theme-editor.php ssl_access_log
+
+3a)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/netflow/
+nfdump -R ./ -N -q -o 'fmt:%sa %da' 'host 172.16.62.42 and port 5900' | sort | uniq -c
+nfdump -B -R ./ -O tstart -N -o 'fmt:%ts %te %td %fl' 'host 172.16.62.42 and host 85.25.95.43 and port 5900'
+nfdump -B -R ./ -O tstart -N -o 'fmt:%ts %te %td %fl' 'host 172.16.62.42 and host 123.150.207.231 and port 5900'
+
+4a)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/pcaps/
+for infile in eth1_2013-08-29_07* ; do
+    tcpdump -n -r $infile -w /cases/for572/e-5.5/vnc.${infile} 'tcp and port 5900';
+done
+cd /cases/for572/e-5.5/
+mergecap -w vnc.eth1_combined.pcap vnc.eth1_2013-08-29*
+ls -l vnc.eth1_combined.pcap 
+md5sum vnc.eth1_combined.pcap 
+
+4d)
+tshark -n -r vnc.eth1_combined.pcap -T fields -e vnc.auth_result -Y 'ip.dst == 123.150.207.231 and vnc.auth_result' | sort | uniq -c | sort -nr
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/netflow/
+
+5a)
+nfdump -B -N -O tstart -t '2013/08/29.15:11:14-2013/08/29.15:22:01' -R ./ 'host 172.16.62.42 and not port 5900 and not port 53'
+
+6a)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/pcaps/
+for infile in eth1_2013-08-29* ; do
+    tcpdump -n -r ${infile} -w /cases/for572/e-5.5/reduced.${infile} 'host 212.252.221.250 and port 80';
+done
+cd /cases/for572/e-5.5/
+mergecap -w reduced.eth1_combined.pcap reduced.eth1_2013-08-29*
+ls -l reduced.eth1_combined.pcap
+md5sum reduced.eth1_combined.pcap 
+http.request
+
+6d)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/pcaps/
+for infile in eth1_2013-08-29*; do
+    tcpdump -n -r $infile -w /cases/for572/e-5.5/http.${infile} 'host 172.16.62.42 and port 80';
+done
+cd /cases/for572/e-5.5/
+mergecap -w http.eth1_combined.pcap http.eth1_2013-08-29_*
+editcap -A '2013-08-29 15:12:30' http.eth1_combined.pcap http.eth1_postdownload.pcap
+ls -l http.eth1_postdownload.pcap 
+md5sum http.eth1_postdownload.pcap 
+
+6e)
+cd /cases/for572/e-5.5/
+tshark -n -r http.eth1_postdownload.pcap -Y 'http.request.method == POST' | wc -l
+tshark -n -r http.eth1_postdownload.pcap -Y 'http.request.method == POST' -T fields -e frame.time -e http.host -e http.request.uri -e http.user_agent -e http.referer
+tshark -n -r http.eth1_postdownload.pcap -Y 'http.request.method == POST' -T fields -e http.host -e http.user_agent | sort | uniq -c | sort -nr
+http.user_agent contains "logkeys"
+
+8a)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/pcaps/ 
+for infile in eth1_2013-08-29*; do
+    tcpdump -n -r $infile -w /cases/for572/e-5.5/https.${infile} 'tcp and port 443';
+done
+cd /cases/for572/e-5.5/
+mergecap -w https.eth1_combined.pcap https.eth1_2013-08-29_*
+ls -l https.eth1_combined.pcap 
+md5sum https.eth1_combined.pcap 
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-web/etc/pki/tls/private/
+cp -a superwackytees.com_key.pem /cases/for572/e-5.5/
+
+9c)
+zcat carved_https_return.bin
+
+10a)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/netflow/
+nfdump -B -R ./ -t '2000/01/01-2013/08/29.14:23:22' -O tstart 'host 123.150.207.231'
+
+10b)
+cd /cases/for572/e-5.5/E-5.5_source_evidence/victim-gw/var/log/netflow/
+nfdump -R . -t '2000/01/01-2013/08/29.14:23:22' -O tstart 'dst host 123.150.207.231 and packets > 0'

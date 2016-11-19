@@ -1,0 +1,29 @@
+Preparation)
+cd /cases/for572/
+mkdir e-4.2
+cd /cases/for572/e-4.2/
+unzip /mnt/hgfs/exercise_data/E-4.2_source_evidence.zip
+
+2b)
+cd /cases/for572/e-4.2/E-4.2_source_evidence/var/log/
+grep "Potential C2" messages | awk '{print $8,$11}' | sort | uniq | awk '{print $1}' | uniq -c
+
+2c)
+cd /cases/for572/e-4.2/E-4.2_source_evidence/var/log/
+grep "Potential C2" messages | grep "SRC=<Insert IP Address Here>"
+
+2e)
+grep "Lateral move" messages
+
+3c)
+cd /cases/for572/e-4.2/E-4.2_source_evidence/var/log/snort/eth1/
+grep -A 2 "Potential C2" alert | grep -- "->" | sed 's/[^ ]* \([0-9\.]*\):.*/\1/' | sort | uniq | wc -l
+cd /cases/for572/e-4.2/E-4.2_source_evidence/var/log/snort/eth2/
+grep -A 2 "Potential C2" alert | grep -- "->" | sed 's/[^ ]* \([0-9\.]*\):.*/\1/' | sort | uniq | wc -l
+cd /cases/for572/e-4.2/E-4.2_source_evidence/var/log/snort/eth3/
+grep -A 2 "Potential C2" alert | grep -- "->" | sed 's/[^ ]* \([0-9\.]*\):.*/\1/' | sort | uniq | wc -l
+
+3e)
+cd /cases/for572/e-4.2/E-4.2_source_evidence/etc/snort/rules/
+grep -i ms08-067 *
+

@@ -1,0 +1,28 @@
+Preparation)
+cd /cases/for572/
+mkdir e-5.1
+cd /cases/for572/e-5.1/
+unzip /mnt/hgfs/exercise_data/E-5.1_source_evidence.zip
+
+1a)
+$ cd /cases/for572/e-5.1/E-5.1_source_evidence/
+$ tshark -n -r stark-20120403-full-ssl.pcap -Y 'ssl.handshake.type == 1' -T fields -e ip.src -e ssl.record.version -e ssl.handshake.ciphersuite > /cases/for572/e-5.1/ssl_ciphersuites_by_ip.txt
+
+1b)
+$ cd /cases/for572/e-5.1/
+$ cat ssl_ciphersuites_by_ip.txt | awk '{print $3}' | sort | uniq -c | sort -nr
+
+2a) [NOTE: The walk-through mis-labels this as "2b"]
+cd /cases/for572/e-5.1/E-5.1_source_evidence/
+tshark -n -r stark-20120403-full-ssl.pcap -Y 'ssl.handshake.certificate' -T fields -E separator=\| -E aggregator=\| -e x509ce.dNSName -e x509sat.teletexString -e x509sat.uTF8String -e x509sat.universalString -e x509sat.IA5String | tr -s \| '\n' | sort | uniq -c | sort -nr 
+
+3a)
+cd /cases/for572/e-5.1/E-5.1_source_evidence/
+tshark -n -r stark-20120403-full-ssl.pcap -Y 'x509ce.dNSName==iCModus.com or x509sat.teletexString==iCModus.com or x509sat.uTF8String==iCModus.com or x509sat.universalString==iCModus.com or x509sat.IA5String==iCModus.com' -T fields -e tcp.stream
+tshark -n -r stark-20120403-full-ssl.pcap -Y 'tcp.stream==2717 or tcp.stream==2719 or tcp.stream==2718' -w /cases/for572/e-5.1/certfiles.pcap
+md5sum /cases/for572/e-5.1/certfiles.pcap
+
+3c)
+openssl x509 -in /cases/for572/e-5.1/icmodus.com.cer -noout -text -inform DER
+
+

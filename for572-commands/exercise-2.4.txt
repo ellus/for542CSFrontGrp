@@ -1,0 +1,47 @@
+Preparation)
+cd /cases/for572/
+mkdir e-2.4
+cd /cases/for572/e-2.4/
+unzip /mnt/hgfs/exercise_data/E-2.4_source_evidence.zip
+
+1)
+cd /cases/for572/e-2.4/E-2.4_source_evidence/netflow/
+nfdump -q -R 2013/ -t '2013/07/17-2013/07/18' -o 'fmt:%sa,%da' 'proto tcp and dst port 80' | sed 1d | tr -d ' ' > /cases/for572/e-2.4/tcp80.csv
+wc -l /cases/for572/e-2.4/tcp80.csv
+cd /cases/for572/e-2.4/E-2.4_source_evidence/netflow/
+nfdump -q -R 2013/ -t '2013/07/17.04:15-2013/07/17.09:00' -o 'fmt:%sa,%da' 'proto tcp and src ip 10.3.58.7 and dst port 80' | sed 1d | tr -d ' ' > /cases/for572/e-2.4/tcp80_10.3.58.7_0415-0900.csv
+
+3a)
+cd /cases/for572/e-2.4/E-2.4_source_evidence/netflow/
+nfdump -q -R 2013/ -t '2013/07/17-2013/07/20' -o 'fmt:%sa,%da' 'proto tcp and dst port 445 and src ip 10.3.58.7' | sed 1d | tr -d ' ' > /cases/for572/e-2.4/tcp445_10.3.58.7_17-19.csv
+
+4a)
+cd /cases/for572/e-2.4/E-2.4_source_evidence/netflow/
+nfdump -q -R 2013/ -t '2013/07/17-2013/07/19' -o 'fmt:%sa,%da' 'proto tcp and dst port 80 and flags S and not flags APFRU' | sed 1d | tr -d ' ' > /cases/for572/e-2.4/tcp80_synonly_17-18.csv
+wc -l /cases/for572/e-2.4/tcp80_synonly_17-18.csv
+cat /cases/for572/e-2.4/tcp80_synonly_17-18.csv | afterglow.pl -t > /cases/for572/e-2.4/tcp80_synonly_17-18.dot
+cat /cases/for572/e-2.4/tcp80_synonly_17-18.dot | neato -Tpng > /cases/for572/e-2.4/tcp80_synonly_17-18.png
+display /cases/for572/e-2.4/tcp80_synonly_17-18.png
+
+5a)
+cd /cases/for572/e-2.4/E-2.4_source_evidence/netflow/
+nfdump -q -R 2013/ -o 'fmt:%sa,%da' 'proto tcp and src port 80 and flags SA and (src ip 222.202.96.37 or src ip 199.7.54.190 or src ip 219.232.242.157 or src ip 12.190.135.235 or src ip 207.58.245.17 or src ip 81.106.48.32 or src ip 199.73.23.114 or src ip 12.190.135.234 or src ip 199.73.28.114 or src ip 94.142.154.72 or src ip 65.55.119.90)' | sed 1d | tr -d ' ' > /cases/for572/e-2.4/tcp80_suspectexternal_2013.csv
+wc -l /cases/for572/e-2.4/tcp80_suspectexternal_2013.csv
+cat /cases/for572/e-2.4/tcp80_suspectexternal_2013.csv | afterglow.pl -t > /cases/for572/e-2.4/tcp80_suspectexternal_2013.dot
+cat /cases/for572/e-2.4/tcp80_suspectexternal_2013.dot | neato -Tpng > /cases/for572/e-2.4/tcp80_suspectexternal_2013.png
+display /cases/for572/e-2.4/tcp80_suspectexternal_2013.png
+
+6)
+cd /cases/for572/e-2.4/E-2.4_source_evidence/derived_evidence/
+ip_stats.py tcp80_suspectexternal_2013.csv
+cat ip_stats.csv
+
+6a)
+cd /cases/for572/e-2.4/E-2.4_source_evidence/netflow/
+nfdump -q -R 2013/ -o 'fmt:%sa,%da' 'proto tcp and port 445' | sed 1d | tr -d ' ' > /cases/for572/e-2.4/tcp445_2013.csv
+cd /cases/for572/e-2.4/
+ip_stats.py tcp445_2013.csv
+
+7a)
+cd /cases/for572/e-2.4/E-2.4_source_evidence/netflow/
+nfdump -q -R 2013/ -o 'fmt:%sa,%da' 'proto tcp and dst port 3389' | sed 1d | tr -d ' ' > /cases/for572/e-2.4/tcp3389_2013.csv

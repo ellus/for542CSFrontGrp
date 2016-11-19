@@ -1,0 +1,37 @@
+Preparation)
+cd /cases/for572/
+mkdir e-3.2
+cd /cases/for572/e-3.2/
+unzip /mnt/hgfs/exercise_data/E-3.2_source_evidence.zip
+
+2b)
+cd /cases/for572/e-3.2/E-3.2_source_evidence/
+tshark -n -r FOR572_wireless.pcap -Y 'wlan_mgt.ssid=="Covert_WLAN"' -T fields -e wlan.sa -e wlan.da | sort | uniq -c
+
+2c)
+cd /cases/for572/e-3.2/E-3.2_source_evidence/
+tshark -n -r FOR572_wireless.pcap -Y 'wlan.sa == 00:21:63:93:8d:d9 and ip' -T fields -e ip.src | sort | uniq -c
+tshark -n -r FOR572_wireless.pcap -Y 'wlan.da == 00:21:63:93:8d:d9 and ip' -T fields -e ip.dst | sort | uniq -c
+
+2d)
+cd /cases/for572/e-3.2/E-3.2_source_evidence/
+tshark -n -r FOR572_wireless.pcap -Y 'ip.src == 192.168.1.113 and ip.dst == 192.168.0.0/16' -T fields -e ip.dst -e ip.proto | sort | uniq -c | sort -nr
+tshark -n -r FOR572_wireless.pcap -Y 'ip.dst == 192.168.1.113 and ip.src == 192.168.0.0/16' -T fields -e ip.src -e ip.proto | sort | uniq -c | sort -nr
+
+3a)
+dns.qry.name contains "facebook"
+
+4a)
+cd /cases/for572/e-3.2/E-3.2_source_evidence/
+aircrack-ng FOR572_wireless.pcap
+
+4b)
+cd /cases/for572/e-3.2/E-3.2_source_evidence/
+airdecap-ng -b 00:1e:e5:5b:50:7b -w A2:8D:7B:15:C7 FOR572_wireless.pcap
+
+5)
+dns.qry.name contains "facebook"
+
+6c)
+(tcp contains "facebook" or udp contains "facebook") and (frame.number < 2681 or frame.number > 3009)
+wlan.bssid == 00:1e:e5:5b:50:7b and (tcp contains "facebook" or udp contains "facebook") and (frame.number < 32874 or frame.number > 33334)

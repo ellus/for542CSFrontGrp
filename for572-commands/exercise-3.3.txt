@@ -1,0 +1,41 @@
+Preparation)
+cd /cases/for572/
+mkdir e-3.3
+cd /cases/for572/e-3.3/
+unzip /mnt/hgfs/exercise_data/E-3.3_source_evidence.zip
+
+2a)
+smb.cmd == 0x72
+smb.cmd == 0x73
+
+2b)
+smb.cmd == 0x75
+smb.cmd == 0x32 && smb.trans2.cmd == 0x0005 && smb.qpi_loi == 1004
+smb.cmd == 0xa2
+smb.cmd == 0x24
+smb.cmd == 0x2e
+smb.cmd == 0x04
+smb.cmd == 0x71
+smb.cmd == 0x74
+
+4a)
+cd /cases/for572/e‐3.3/
+md5sum PSEXESVC.EXE
+
+4b)
+cd /cases/for572/e‐3.3/
+file PSEXESVC.EXE
+
+4c)
+cd /cases/for572/e-3.3/
+md5sum nromanoff@stark-research-labs.com.pst
+
+5a)
+smb.cmd == 0x75 && (smb.tid == 0)
+
+5b)
+smb.cmd == 0x75 && (smb.tid == 0) && !(smb.path=="\\\\CONTROLLER\\IPC$")
+
+5c)
+(smb.cmd == 0x75 && (smb.tid == 0)) && !(smb.path == "\\\\CONTROLLER\\IPC$") && !(smb.path == "\\\\CONTROLLER.SHIELDBASE.LOCAL\\SYSVOL") && !(smb.path == "\\\\CONTROLLER.SHIELDBASE.LOCAL\\IPC$")
+tshark -n -r stark-20120403-full-smb_smb2.pcap -Y '(smb.cmd == 0xa2 && (smb.fid == 0)) && !(ip.addr == 10.3.58.4) && !(ip.addr == 10.3.58.9)' -T fields -e ip.src -e ip.dst -e smb.path -e smb.file | sort | uniq -c | sort -nr > /cases/for572/e-3.3/smb_file_requests.txt

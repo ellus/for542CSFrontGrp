@@ -1,0 +1,55 @@
+Preparation)
+cd /cases/for572/
+mkdir e-3.1
+cd /cases/for572/e-3.1/
+unzip /mnt/hgfs/exercise_data/E-3.1_source_evidence.zip
+
+1a)
+cd /cases/for572/e-3.1/E-3.1_source_evidence/
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -e frame.time -e http.request.method -e http.host -e http.request.uri -e http.user_agent -Y 'http.request' > /cases/for572/e-3.1/useragent_derived.log
+cd /cases/for572/e-3.1/
+md5sum useragent_derived.log
+
+2a)
+cd /cases/for572/e-3.1/
+cat useragent_derived.log | awk -F"\t" '{print $5}' | sort | uniq -c | sort -nr
+
+2b) [note: walk-through section is mis-labeled as "2c"]
+cd /cases/for572/e-3.1/
+grep "Firefox/15.0" useragent_derived.log | awk -F"\t" '{print $2,$3}' | sort | uniq -c | sort -nr
+grep "Firefox/15.0" useragent_derived.log | awk -F"\t" '{print $4}' | sort | uniq -c | sort -nr
+grep "MSIE 8.0" useragent_derived.log | awk -F"\t" '{print $2,$3}' | sort | uniq -c | sort -nr
+grep "MSIE 8.0" useragent_derived.log | awk -F"\t" '{print $4}' | sort | uniq -c | sort -nr
+
+3a)
+cd /cases/for572/e-3.1/E-3.1_source_evidence/
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -q -z io,phs
+
+3c)
+cd /cases/for572/e-3.1/E-3.1_source_evidence/
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -e frame.time -Y 'http.user_agent contains "Firefox/15.0"'
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -e frame.time -Y 'http.user_agent contains "MSIE 8.0"'
+
+3d)
+$ cd /cases/for572/e-3.1/E-3.1_source_evidence/
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -e frame.time_delta_displayed -e http.request.uri -Y 'http.user_agent contains "MSIE 8.0" and http.request.uri contains "sugexp"'
+
+4a)
+$ cd /cases/for572/e-3.1/E-3.1_source_evidence/
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -E separator=/t -e http.host -Y 'http.cookie contains "utm"' | sort | uniq -c | sort -nr
+
+4b)
+$ cd /cases/for572/e-3.1/E-3.1_source_evidence/
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -E separator=/t -e frame.number -e frame.time -e http.request.uri -Y 'http.cookie contains "utm" and http.host contains "depositfiles.com"' | wc -l
+
+4c)
+$ cd /cases/for572/e-3.1/E-3.1_source_evidence/
+$ tshark -n -r 10_3_59_127.pcap -T fields -e http.cookie -Y 'http.request.uri == "http://ads.depositfiles.com/view.gif?c=294&z=6&b=498&u=5044e5958d63 4028577119769609527" && http.cookie contains "utm"'
+
+4d)
+$ cd /cases/for572/e-3.1/E-3.1_source_evidence/
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -E separator=/t -e frame.number -e frame.time -e http.referer -e http.cookie -Y 'http.request.uri=="http://ads.depositfiles.com/view.gif?c=294&z=6&b=498&u=5044e5958d634028577119769609527"'
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -E separator=/t -e frame.number -e frame.time -e http.referer -e http.cookie -Y 'http.request.uri=="http://ads.depositfiles.com/upload/1111/ad498294f8c89a.htm"'
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -E separator=/t -e frame.number -e frame.time -e http.referer -e http.cookie -Y 'http.request.uri=="http://depositfiles.com/files/dc2v9oru7"'
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -E separator=/t -e frame.number -e frame.time -e http.referer -e http.cookie -Y 'http.request.uri=="http://4render.blogspot.com/2011/12/adobe-photoshop-cs6-crack-only.html"'
+tshark -n -C for572ex31 -r 10_3_59_127.pcap -T fields -E separator=/t -e frame.number -e frame.time -e http.referer -e http.cookie -Y 'http.request.uri=="http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=18&ved=0CEoQFjAHOAo&url=http%3A%2F%2F4render.blogspot. com%2F2011%2F12%2Fadobe-photoshop-cs6-crack-only.html&ei=VudEUL-rE4rB0QHd54GgDg&usg=AFQjCNERU0_zRBC5_j_Nh8tw2FQRGOxzhw"'

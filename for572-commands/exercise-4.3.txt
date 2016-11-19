@@ -1,0 +1,23 @@
+Preparation)
+cd /cases/for572/
+mkdir e-4.3
+
+1a)
+http.request and http.host contains "google"
+
+1) [NOTE: These commands are to be run as the "ls_user" user on the Xplico/Logstash VM - NOT on your FOR572 SIFT VM!]
+cd /usr/local/logstash-syslog/
+unzip ~ls_user/exercise_source_logs/proxy_logs.zip
+
+3) [NOTE: These commands are to be run as the "ls_user" user on the Xplico/Logstash VM - NOT on your FOR572 SIFT VM!]
+cd /usr/local/logstash-syslog/
+unzip ~ls_user/exercise_source_logs/commonuse_windows_logs.zip
+
+5) [NOTE: These commands are to be run as the "ls_user" user on the Xplico/Logstash VM - NOT on your FOR572 SIFT VM!]
+cd /usr/local/logstash-syslog/
+unzip ~ls_user/exercise_source_logs/muse_logs.zip
+
+6) [NOTE: These commands are to be run as the "ls_user" user on the Xplico/Logstash VM - NOT on your FOR572 SIFT VM!]
+cd /usr/local/logstash-syslog/
+unzip ~ls_user/exercise_source_logs/fw-router_logs.zip
+

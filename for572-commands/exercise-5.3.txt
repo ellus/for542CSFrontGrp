@@ -1,0 +1,61 @@
+Preparation)
+cd /cases/for572/
+mkdir e-5.3
+cd /cases/for572/e-5.3/
+unzip /mnt/hgfs/exercise_data/E-5.3_source_evidence.zip
+
+1a)
+cd /cases/for572/e-5.3/E-5.3_source_evidence/
+md5sum evidence1.pcap 
+
+1b)
+cd /cases/for572/e-5.3/E-5.3_source_evidence/
+tcpslice -r evidence1.pcap
+
+2a)
+cd /cases/for572/e-5.3/E-5.3_source_evidence/
+tshark -n -r evidence1.pcap -Y 'ip' -T fields -e ip.src -e ip.dst | sort | uniq
+tshark -n -r evidence1.pcap -Y 'ip' -T fields -e ip.dst -e ip.src | sed 's/\t/\n/' | sort | uniq
+
+2b)
+cd /cases/for572/e-5.3/E-5.3_source_evidence/
+tshark -n -r evidence1.pcap -q -z io,phs | grep frames: | awk '{print $1}'
+
+3a)
+cd /cases/for572/e-5.3/E-5.3_source_evidence/
+tshark -n -r evidence1.pcap -q -z io,phs | grep ftp
+
+3b)
+cd /cases/for572/e-5.3/E-5.3_source_evidence/
+tshark -n -r evidence1.pcap -Y 'ftp' -w /cases/for572/e-5.3/ftp.pcap 
+cd /cases/for572/e-5.3/
+md5sum ftp.pcap 
+
+3c)
+cd /cases/for572/e-5.3/
+ngrep -t -q -I ftp.pcap "STOR"
+ngrep -t -q -I ftp.pcap "RETR"
+
+3d)
+cd /cases/for572/e-5.3/
+ngrep -t -q -I ftp.pcap "227"
+
+3e)
+cd /cases/for572/e-5.3/E-5.3_source_evidence/
+tcpdump -n -r evidence1.pcap -w /cases/for572/e-5.3/ftp-data.pcap 'tcp and host 3.1.3.37 and (port 1040 or port 1041 or port 1042)'
+
+cd /cases/for572/e-5.3/
+md5sum ftp-data.pcap
+
+3f)
+cd /cases/for572/e-5.3/
+tcpflow -r ftp-data.pcap
+md5sum 003.001.003.038.0104*
+
+4a)
+asc(1000000,\x2d\x2d\x2d\x2d\x2dBEGIN\x20PGP\x20PUBLIC\x20KEY\x20BLOCK\x2d\x2d\x2d\x2d\x2d,\x2d\x2d\x2d\x2d\x2dEND\x20PGP\x20PUBLIC\x20KEY\x20BLOCK\x2d\x2d\x2d\x2d\x2d);
+
+4b)
+cd /cases/for572/e-5.3/E-5.3_source_evidence/
+tcpxtract -f ftp-data.pcap -c /etc/tcpxtract.conf 
+md5sum 0000000*.asc
