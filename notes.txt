@@ -149,3 +149,14 @@ RF
 63.233.110.148	a192.vi5g5.akafms.net
 65.121.208.77	a192.vi5g5.akafms.net
 65.121.208.76	a192.vi5g5.akafms.net
+
+---David---
+smb_traffic_fury-dungan.pcap
+2012-04-05 started at 18.45.36.288105 at  10.3.58.7, tdungan wk, started a SMB session to 10.3.58.6, nfury wk
+with username shieldbase\vibranium
+in this session there's a request to connect to the share:
+\\199.73.28.114\c$ (frame 137724 in the pcap)
+
+and create the file
+windows\system32\hythonize.exe (frame 137820 in the pcap)
+there are a lot of files, some very intresting, in the session.
