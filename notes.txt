@@ -159,4 +159,10 @@ in this session there's a request to connect to the share:
 
 and create the file
 windows\system32\hythonize.exe (frame 137820 in the pcap)
+there are a lot of entries related to
+atsvc
+probably he have manipulated it.
+
 there are a lot of files, some very intresting, in the session.
+
+
