@@ -1,4 +1,4 @@
-10.3.58.4 Domain controler/SMTP Server
+10.3.58.4 Domain controler/SMTP Server  alos  McAfee Epo server listinging on 3137
 10.3.58.5 Nathasa Romanoff
 10.3.58.6 Nick Fury
 10.3.58.7 Timothy Dungan
@@ -73,7 +73,7 @@ Time window: 2012-04-02 21:52:19 - 2012-04-06 19:28:02
 CA
 
 199.73.28.114  (very intresting)
-68.71.216.157   (very intresting)
+68.71.216.157     espn --no intresting
 46.105.106.175
 10.3.58.7
 12.190.135.234
