@@ -59,3 +59,22 @@ Date first seen          Duration       Src IP Addr      Dst IP Addr   Packets  
 Summary: total flows: 1751, total bytes: 142812, total packets: 5099, avg bps: 3, avg pps: 0, avg bpp: 28
 Time window: 2012-04-02 21:52:19 - 2012-04-06 19:28:02
 
+
+CA
+
+199.73.28.114  (very intresting)
+68.71.216.157   (very intresting)
+46.105.106.175
+10.3.58.7
+12.190.135.234
+10.3.58.7
+54.240.160.193   (very intresting)
+10.3.58.6
+68.232.32.137
+10.3.58.7
+68.142.111.45
+64.145.87.127
+63.141.200.142
+63.233.110.148
+65.121.208.77
+65.121.208.76
