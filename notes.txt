@@ -121,3 +121,22 @@ http://biot.com/capstats/bpf.html
 Ellus
 splitting pcap in time intervals
 editcap -F libpcap -A "2012-04-03 00:10:00" -B "2012-04-03 00:45:00" stark_labs_traffic.pcap srl201204030010_35min.pcap
+
+RF
+
+99.73.28.114  	No Match
+68.71.216.157  ESPN 
+46.105.106.175 Seesmic.com
+10.3.58.7	shieldbase.local
+12.190.135.234	None
+10.3.58.7	Timothy Duncan
+54.240.160.193  dem5xqcn61lj8.cloudfront.net: type A, class IN
+10.3.58.6	shieldbase.local
+68.232.32.137	gs1.fms.edgecastcdn.net
+10.3.58.7
+68.142.111.45	brightcove-14.fcod.llnwd.net
+64.145.87.127   a192.vi5g5.akafms.net
+63.141.200.142	a192.vi5g5.akafms.net
+63.233.110.148	a192.vi5g5.akafms.net
+65.121.208.77	a192.vi5g5.akafms.net
+65.121.208.76	a192.vi5g5.akafms.net
